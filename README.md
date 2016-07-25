@@ -1,3 +1,3 @@
 # firstTest
-Just a learning how Git works repo
+Just a learning how a Git repo works
 hello world!
