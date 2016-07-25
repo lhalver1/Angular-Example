@@ -3,7 +3,7 @@ var myApp = angular.module('myApp',[]);
 //myApp.directive('myDirective', function() {});
 //myApp.factory('myService', function() {});
 
-function MyCtrl($scope) {
+myApp.controller('MyCtrl', function MyCtrl($scope) {
     $scope.name = 'Superhero';
     $scope.editing = false;
     $scope.themeName = "bs3";
@@ -34,4 +34,4 @@ function MyCtrl($scope) {
       
     	return rows;
     }
-}
+});
