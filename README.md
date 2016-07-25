@@ -1,4 +1,4 @@
-# firstTest
+# My Test Repository
 
 This is my learning Git Repo
 
