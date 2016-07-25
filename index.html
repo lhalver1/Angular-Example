@@ -1,9 +1,89 @@
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>My Test Page</title>
+    <title>Bootstap Version Switcher</title>
+
+    <!-- Bootstrap 4 -->
+    <!--<link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" integrity="sha384-XXXXXXXX"
+        crossorigin="anonymous">
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js" integrity="sha384-XXXXXXXX" crossorigin="anonymous"></script>-->
+
+    <script src="home.js"></script>
+
 </head>
+
 <body>
-    <h1>Hello World!</h1>
+    <div ng-app="myApp" ng-controller="MyCtrl">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" ng-disabled="themeName != 'bs4'">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" ng-disabled="themeName != 'bs3'">
+
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Bootstrap <span class="text-info" ng-show="themeName === 'bs4'">4</span> <span class="text-info" ng-show="themeName === 'bs3'">3</span></h1>
+                <p>
+                    <span class="text-success">Lookin Good <span id="name" ng-click="editing = !editing" ng-show="!editing">{{name}}</span></span>
+                    <input id="nameField" type="text" class="form-control" ng-model="name" ng-show="editing" />
+                    <button class="btn" ng-class="{ 'btn-success-outline': themeName =='bs4', 'btn-success': themeName == 'bs3' }" ng-click="editing = !editing"
+                        ng-show="editing"><span class="glyphicon glyphicon-ok" ng-show="themeName == 'bs3'" aria-hidden="true"></span><span ng-show="themeName == 'bs4'">Done</span></button>
+                </p>
+                <form name="myForm">
+        <label>
+          <input type="radio" ng-model="themeName" value="bs4">
+          Bootstrap 4
+        </label><br/>
+
+        <label>
+          <input type="radio" ng-model="themeName" value="bs3">
+          Bootstrap 3
+        </label>
+                </form>
+            </div>
+
+            <div class="row searchRow">
+                <div class="col-xs-4 col-xs-offset-6">
+                    <input id="searchBox" class="form-control" placeholder="Search" ng-model="searchTxt" />
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn" ng-class="{ 'btn-success-outline': themeName =='bs4', 'btn-success': themeName == 'bs3' }">Search</button>
+                </div>
+            </div>
+
+            <div class="row editRow" ng-show="selectedRow">
+                <div class="col-xs-6">
+                    <input type="text" class="form-control" ng-model="selectedRow.col1" placeholder="Column 1" />
+                </div>
+                <div class="col-xs-6">
+                    <input type="text" class="form-control" ng-model="selectedRow.col2" placeholder="Column 2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="tableDiv">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Column1</th>
+                                    <th>Column2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="row in rows | filter:searchTxt" ng-click="selectTableRow(row)" ng-class="{'selected': selectedRow == row}">
+                                    <td>{{row.col1}}</td>
+                                    <td>{{row.col2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- END table row -->
+
+        </div>
+        <!-- END .container -->
+    </div>
+
 </body>
+
 </html>
