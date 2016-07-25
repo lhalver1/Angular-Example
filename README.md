@@ -1,3 +1,4 @@
 # firstTest
-Just a learning how Git works repo, because it is no SVN!
+
+Just a learning how a Git repo works, because it is no SVN!
 hello world!
