@@ -51,7 +51,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
 
         return rows;
     }
-
+    
+    /**
+     * Builds the deck of cards. Creates an array of card objects with a
+     * suit and value property.
+     */
     function getCards() {
         var genDeck = [];
         var suits = ["Hearts", "Diamonds", "Spades", "Clubs"];
@@ -99,6 +103,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
         return array;
     }
 
+    /**
+     * Deals out cards to the player and the dealer. First makes sure the
+     * gaming flag is set and that both hands are empty, if not then it 
+     * puts the cards in the hands in the trash pile.
+     */
     $scope.dealOutCards = function() {
         if($scope.gaming === false){
             $scope.gaming = true;
@@ -132,6 +141,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
         }
     }//End dealOutCards()
 
+    /**
+     * Resets everything, the deck is cleared and then built again.
+     * The trash is cleared, the players hand is cleared, and the 
+     * dealers hand is cleared. The gaming flag is also set to false.
+     */
     $scope.resetDeck = function() {
         $scope.deck = [];
         $scope.trash = [];
