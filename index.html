@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row table">
                 <div class="col-xs-12">
                     <div class="tableDiv">
                         <table class="table">
@@ -166,6 +166,40 @@
                     </div>
                 </div>
             </div><!-- END table row -->
+
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-sm-2 col-sm-offset-4">
+                    Cards Left: {{deck.length}} <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-show="trash.length < 38">Deal</button>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn" ng-click="resetDeck()" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }" ng-show="gaming">Reset</button>
+                </div>
+            </div>
+
+            <div class="row" ng-show="gaming">
+                <div class="col-sm-6" style="text-align: center;"><h2>Dealer - {{total}}</h2></div>
+                <div class="col-sm-6" style="text-align: center;"><h2>You - {{total}}</h2></div>
+            </div>
+
+            <div class="row" ng-show="gaming">
+                <div class="col-sm-3" ng-repeat="card1 in dealerHand">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>{{card1.suit}}</p>
+                            <p>{{card1.value}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" ng-repeat="card2 in userHand">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>{{card2.suit}}</p>
+                            <p>{{card2.value}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div><!-- END .container -->
 
     </div><!-- End myCtrl -->
