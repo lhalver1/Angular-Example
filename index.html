@@ -179,10 +179,17 @@
             <div ng-show="gaming">
 
                 <div class="row" ng-repeat="player in players">
-                    <div class="col-sm-1">{{player.name}}</div>
+                    <div class="col-sm-1">
+                        <div class="row">
+                            <div class="col-xs-12">{{player.name}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12"><b>{{cardsTotal(player)}}</b></div>
+                        </div>
+                    </div>
                     <div class="col-sm-3" ng-repeat="card in player.cards">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                        <div class="panel panel-default card">
+                            <div class="panel-body" ng-show="$index > 0">
                                 <span class="glyphicon" aria-hidden="true"
                                 ng-class="{ 
                                     'glyphicon-heart': card.suit === 'Hearts',
@@ -197,6 +204,9 @@
                                     'glyphicon-play': card.suit === 'Diamonds',
                                     'glyphicon-cloud': card.suit === 'Clubs',
                                     'glyphicon-tree-deciduous': card.suit === 'Spades' }"></span>
+                            </div>
+                            <div class="panel-body" ng-show="$index === 0">
+                                
                             </div>
                         </div>
                     </div>

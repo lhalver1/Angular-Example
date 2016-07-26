@@ -26,7 +26,13 @@ table.table tbody tr:hover {
 
 
 /*CARDS*/
+.card {
+  height: 150px;
+  position: relative !important;
+}
 .card-bottom {
+  position: absolute;
+  bottom: 0;
   float: right;
 }
 .glyphicon-heart {

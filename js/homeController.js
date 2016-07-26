@@ -149,5 +149,27 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
         $scope.gaming = false;
     }
 
+    $scope.cardsTotal = function(player) {
+        var total = 0;
+
+        for (var i = 0; i < player.cards.length; i++) {
+            var card = player.cards[i];
+            var value = card.value;
+
+            if(value == "King" || value == "Queen" || value == "Jack") {
+                total += 10;
+            } else if(value == "Ace") {
+                if (total + 11 <= 21) {
+                    total += 11;
+                } else {
+                    total += 1;
+                }
+            } else {
+                total += parseInt(value);
+            }
+        }
+
+        return total;
+    }
     
 });
