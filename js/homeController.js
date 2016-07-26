@@ -12,7 +12,10 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
     $scope.gaming = false;      //Flag for gaming
     $scope.trash = [];          //discard pile
     $scope.deck = getCards();   //Deck of Cards
-    $scope.players = [{ name: "Dealer", cards: []}, { name: "Player", cards: []}];
+    $scope.players = [
+        { name: "Player", cards: []},
+        { name: "Dealer", cards: []} 
+    ];
     //$scope.dealerHand = [];     //Dealers Hand
     //$scope.userHand = [];       //Users hand
 
@@ -114,32 +117,22 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
             $scope.gaming = true;
         }
 
-        if($scope.userHand.length > 0) {
-            for (var index = 0; index < $scope.userHand.length; index++) {
-                var trashcard = $scope.userHand[index];
-                $scope.trash.push(trashcard);
+        for (var i = 0; i < $scope.players.length; i++) {
+            var currPlayer = $scope.players[i];
+            if (currPlayer.cards.length > 0) {
+                $scope.trash.concat(currPlayer.cards);
+                currPlayer.cards = [];
             }
-            $scope.userHand = [];
-        }
-        if ($scope.dealerHand.length > 0) {
-            for (var index = 0; index < $scope.dealerHand.length; index++) {
-                var trashcard = $scope.dealerHand[index];
-                $scope.trash.push(trashcard);
-            }
-            $scope.dealerHand = [];
         }
 
-        for (var i = 0; i < 4; i++) {
-            var isEven = i%2 === 0;
-            var currCard = $scope.deck.splice(0,1)[0];
-            
-            if (isEven) {
-                $scope.userHand.push(currCard);
-            } else {
-                $scope.dealerHand.push(currCard);
+        for(var x = 0; x < 2 ; x++) {
+            for (var i = 0; i < $scope.players.length; i++) {
+                var currPlayer = $scope.players[i];
+                var currCard = $scope.deck.splice(0,1)[0];
+                currPlayer.cards.push(currCard);
             }
-            
         }
+
     }//End dealOutCards()
 
     /**

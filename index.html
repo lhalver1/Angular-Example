@@ -176,28 +176,32 @@
                 </div>
             </div>
 
-            <div class="row" ng-show="gaming">
-                <div class="col-sm-6" style="text-align: center;"><h2>Dealer - {{total}}</h2></div>
-                <div class="col-sm-6" style="text-align: center;"><h2>You - {{total}}</h2></div>
-            </div>
+            <div ng-show="gaming">
 
-            <div class="row" ng-show="gaming">
-                <div class="col-sm-3" ng-repeat="card1 in dealerHand">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>{{card1.suit}}</p>
-                            <p>{{card1.value}}</p>
+                <div class="row" ng-repeat="player in players">
+                    <div class="col-sm-1">{{player.name}}</div>
+                    <div class="col-sm-3" ng-repeat="card in player.cards">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <span class="glyphicon" aria-hidden="true"
+                                ng-class="{ 
+                                    'glyphicon-heart': card.suit === 'Hearts',
+                                    'glyphicon-play': card.suit === 'Diamonds',
+                                    'glyphicon-cloud': card.suit === 'Clubs',
+                                    'glyphicon-tree-deciduous': card.suit === 'Spades' }"></span>
+                                <p>{{card.suit}}</p>
+                                <p>{{card.value}}</p>
+                                <span class="card-bottom glyphicon" aria-hidden="true"
+                                ng-class="{ 
+                                    'glyphicon-heart': card.suit === 'Hearts',
+                                    'glyphicon-play': card.suit === 'Diamonds',
+                                    'glyphicon-cloud': card.suit === 'Clubs',
+                                    'glyphicon-tree-deciduous': card.suit === 'Spades' }"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3" ng-repeat="card2 in userHand">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>{{card2.suit}}</p>
-                            <p>{{card2.value}}</p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             
         </div><!-- END .container -->

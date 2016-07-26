@@ -22,3 +22,23 @@ table.table tbody tr:hover {
   padding: 5px 0;
   border-radius: 6px;
 } 
+
+
+
+/*CARDS*/
+.card-bottom {
+  float: right;
+}
+.glyphicon-heart {
+  color: red;
+}
+.glyphicon-play {
+  color: red;
+}
+.glyphicon-cloud {
+  color: black;
+}
+/*spades*/
+.glyphicon-tree-deciduous {
+  color: black;
+}
