@@ -12,8 +12,9 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
     $scope.gaming = false;      //Flag for gaming
     $scope.trash = [];          //discard pile
     $scope.deck = getCards();   //Deck of Cards
-    $scope.dealerHand = [];     //Dealers Hand
-    $scope.userHand = [];       //Users hand
+    $scope.players = [{ name: "Dealer", cards: []}, { name: "Player", cards: []}];
+    //$scope.dealerHand = [];     //Dealers Hand
+    //$scope.userHand = [];       //Users hand
 
 
 
