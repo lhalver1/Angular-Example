@@ -8,7 +8,7 @@ table.table {
 } */
 #name:hover {cursor:pointer; text-decoration:underline;}
 
-table.table tbody tr:hover, .selected {
+table.table tbody tr:hover {
   background-color: #5bc0de;
   color: white;
   cursor: pointer;

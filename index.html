@@ -49,17 +49,23 @@
                     <input id="searchBox" class="form-control" placeholder="Search" ng-model="searchTxt" />
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn" ng-class="{ 'btn-success-outline': themeName =='bs4', 'btn-success': themeName == 'bs3' }">Search</button>
+                    <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }">Search</button>
                 </div>
             </div>
 
             <div class="row editRow" ng-show="selectedRow">
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" ng-model="selectedRow.col1" placeholder="Column 1" />
-                </div>
-                <div class="col-xs-6">
-                    <input type="text" class="form-control" ng-model="selectedRow.col2" placeholder="Column 2">
-                </div>
+                    <div class="col-xs-6">
+                        <label>Column 1</label>
+                        <form ng-submit="selectedRow = null">
+                            <input type="text" class="form-control" ng-model="selectedRow.col1" placeholder="Column 1" />
+                        </form>
+                    </div>
+                    <div class="col-xs-6">
+                        <label>Column 2</label>
+                        <form ng-submit="selectedRow = null">
+                            <input type="text" class="form-control" ng-model="selectedRow.col2" placeholder="Column 2">
+                        </form>
+                    </div>
             </div>
 
             <div class="row">
@@ -73,7 +79,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in rows | filter:searchTxt" ng-click="selectTableRow(row)" ng-class="{'selected': selectedRow == row}">
+                                <tr ng-repeat="row in rows | filter:searchTxt" ng-click="selectTableRow(row)" ng-class="{'info': selectedRow == row}">
                                     <td>{{row.col1}}</td>
                                     <td>{{row.col2}}</td>
                                 </tr>

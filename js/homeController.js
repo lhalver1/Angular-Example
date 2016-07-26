@@ -19,6 +19,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
         }
     }
 
+    $scope.meh = function() {
+        alert('hello world');
+        $scope.selectedRow = null;
+    }
+
     $scope.editName = function () {
         $scope.editing = true;
     }
