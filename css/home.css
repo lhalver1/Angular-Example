@@ -14,7 +14,7 @@ table.table tbody tr:hover {
   cursor: pointer;
 }
 #nameField {
-  width: 150px;
+  /*width: 150px;*/
   display: inline;
 }
 .searchRow, .editRow {
@@ -26,14 +26,25 @@ table.table tbody tr:hover {
 
 
 /*CARDS*/
+.hand { display: inline-block; }
 .card {
-  height: 150px;
-  position: relative !important;
+  height: 180px;
+  width: 150px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px 3px;
 }
 .card-bottom {
-  position: absolute;
-  bottom: 0;
+  vertical-align: bottom;
   float: right;
+}
+.card-value {
+  font-size: 2.5em;
+  text-align: center;
+}
+.card .glyphicon {
+  font-size: 2em;
 }
 .glyphicon-heart {
   color: red;

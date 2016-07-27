@@ -10,16 +10,13 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
 
     //Black Jack vars
     $scope.gaming = false;      //Flag for gaming
+    $scope.roundOver = false;   //Flag for the current hand
     $scope.trash = [];          //discard pile
     $scope.deck = getCards();   //Deck of Cards
     $scope.players = [
-        { name: "Player", cards: []},
-        { name: "Dealer", cards: []} 
+        { name: "Player", cards: [] },
+        { name: "Dealer", cards: [] } 
     ];
-    //$scope.dealerHand = [];     //Dealers Hand
-    //$scope.userHand = [];       //Users hand
-
-
 
     $scope.selectedRow = null;
     $scope.rows = generateRows(Math.round(Math.random() * (5 - 1) + 1));
@@ -31,11 +28,6 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
         } else {
             $scope.selectedRow = row;
         }
-    }
-
-    $scope.meh = function() {
-        alert('hello world');
-        $scope.selectedRow = null;
     }
 
     $scope.editName = function () {
@@ -134,6 +126,30 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
         }
 
     }//End dealOutCards()
+
+    /**
+     * Adds a card to the players hand, if the players hand excedes
+     * 21 then the player ends their turn and loses and the hand.
+     */
+    $scope.hit = function() {
+        $scope.players[0].cards.push($scope.deck.splice(0,1)[0]);
+    }
+
+    /**
+     * The player has elected to stay with their hand. End
+     * their turn.
+     */
+    $scope.stay = function() {
+        
+    }
+
+    $scope.reshuffle = function() {
+        $scope.deck = [];
+        $scope.trash = [];
+        $scope.deck = getCards();
+        $scope.userHand = [];
+        $scope.dealerHand = [];
+    }
 
     /**
      * Resets everything, the deck is cleared and then built again.
