@@ -3,19 +3,19 @@ var myApp = angular.module('myApp', []);
 //myApp.directive('myDirective', function() {});
 //myApp.factory('myService', function() {});
 
-myApp.controller('MyCtrl', function MyCtrl($scope) {
+myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     $scope.name = 'Superhero';
     $scope.editing = false;
-    $scope.themeName = "bs3";
+    $scope.themeName = "bs4";
 
     //Black Jack vars
-    $scope.gaming = false;      //Flag for gaming
-    $scope.roundOver = false;   //Flag for the current hand
-    $scope.trash = [];          //discard pile
-    $scope.deck = getCards();   //Deck of Cards
+    $scope.gaming = false;              //Flag for gaming
+    $scope.playerTurnIndex = 0;         //Flag for the current hand
+    $scope.trash = [];                  //discard pile
+    $scope.deck = getCards();           //Deck of Cards
     $scope.players = [
-        { name: "Player", cards: [] },
-        { name: "Dealer", cards: [] } 
+        { name: "Player", cards: [], turn: false },
+        { name: "Dealer", cards: [], turn: false } 
     ];
 
     $scope.selectedRow = null;
@@ -125,22 +125,66 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
             }
         }
 
+        $scope.resetPlayerTurns();
+        $scope.players[$scope.playerTurnIndex].turn = true;
+
     }//End dealOutCards()
+
+    $scope.resetPlayerTurns = function() {
+        $scope.playerTurnIndex = 0;
+        for (var index = 0; index < $scope.players.length; index++) {
+            var player = $scope.players[index];
+            player.turn = false;
+        }
+    }
 
     /**
      * Adds a card to the players hand, if the players hand excedes
      * 21 then the player ends their turn and loses and the hand.
      */
-    $scope.hit = function() {
-        $scope.players[0].cards.push($scope.deck.splice(0,1)[0]);
+    $scope.hit = function(player) {
+        player.cards.push($scope.deck.splice(0,1)[0]);
+
+        if($scope.cardsTotal(player) >= 22) {
+            $scope.playerTurnIndex += 1;
+
+            //If the next players turn is out of index for players array
+            //Reset it back to the beginning
+            if ($scope.playerTurnIndex >= $scope.players.length) {
+
+                $scope.endRound();
+                
+            } else {
+                $scope.players[$scope.playerTurnIndex].turn = true;
+            }
+        }
+
     }
 
     /**
      * The player has elected to stay with their hand. End
      * their turn.
      */
-    $scope.stay = function() {
-        
+    $scope.stay = function(player) {
+        $scope.playerTurnIndex += 1;
+
+        //If the next players turn is out of index for players array
+        //Reset it back to the beginning
+        if ($scope.playerTurnIndex >= $scope.players.length) {
+
+            $scope.endRound();
+
+        } else {
+            $scope.players[$scope.playerTurnIndex].turn = true;
+        }
+    }
+
+    $scope.endRound = function() {
+
+        $timeout(function() {
+            $scope.dealOutCards();
+        }, 3000);
+
     }
 
     $scope.reshuffle = function() {
@@ -166,6 +210,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
     }
 
     $scope.cardsTotal = function(player) {
+        var acesArr = [];
         var total = 0;
 
         for (var i = 0; i < player.cards.length; i++) {
@@ -174,14 +219,19 @@ myApp.controller('MyCtrl', function MyCtrl($scope) {
 
             if(value == "King" || value == "Queen" || value == "Jack") {
                 total += 10;
-            } else if(value == "Ace") {
-                if (total + 11 <= 21) {
-                    total += 11;
-                } else {
-                    total += 1;
-                }
+            } else if (value == "Ace") {
+                total += 11;
+                acesArr.push(card);
             } else {
                 total += parseInt(value);
+            }
+        }//END For
+
+        if (acesArr.length > 0) {
+            for (var index = 0; index < acesArr.length; index++) {
+                if (total > 21) {
+                    total -= 10;
+                }
             }
         }
 

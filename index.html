@@ -172,12 +172,6 @@
                     Cards Left: {{deck.length}} <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-show="trash.length < 38">Deal</button>
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit()" ng-show="gaming">Hit</button>
-                </div>
-                <div class="col-sm-1">
-                    <button class="btn" ng-class="{ 'btn-warning-outline': themeName === 'bs4', 'btn-warning': themeName === 'bs3' }" ng-click="stay()" ng-show="gaming">Stay</button>
-                </div>
-                <div class="col-sm-1">
                     <button class="btn" ng-class="{ 'btn-info-outline': themeName === 'bs4', 'btn-info': themeName === 'bs3' }" ng-click="reshuffle()" ng-show="gaming">Shuffle</button>
                 </div>
                 <div class="col-sm-1">
@@ -193,14 +187,22 @@
                             <div class="col-xs-12">{{player.name}}</div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12"><b>{{cardsTotal(player)}}</b></div>
+                            <div class="col-xs-12" ng-if="playerTurnIndex === $index || player.turn"><b>{{cardsTotal(player)}}</b></div>
+                        </div>
+                        <div class="row" ng-if="playerTurnIndex === $index">
+                            <div class="col-xs-4">
+                                <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs4' }" ng-click="hit(player)" ng-show="gaming">Hit</button>
+                            </div>
+                            <div class="col-xs-3">
+                                <button class="btn" ng-class="{ 'btn-warning-outline': themeName === 'bs4', 'btn-warning': themeName === 'bs3' }" ng-click="stay(player)" ng-show="gaming">Stay</button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-10">
 
                         <div class="hand" ng-repeat="card in player.cards">
                             <div class="card">
-                                <div class="card-details" ng-if="$parent.$index === 0 || $index != 0">
+                                <div class="card-details" ng-show="$parent.$index === 0 || $index != 0 || playerTurnIndex === $parent.$index || player.turn">
                                     <span class="glyphicon" aria-hidden="true"
                                     ng-class="{ 
                                         'glyphicon-heart': card.suit === 'Hearts',
@@ -218,7 +220,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                     </div>
                 </div>
