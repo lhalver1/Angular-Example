@@ -157,7 +157,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="row in rows | filter:searchTxt" ng-click="selectTableRow(row)" ng-class="{'info': selectedRow == row}">
+                                <tr ng-repeat="row in rows | filter:searchTxt" ng-click="electTableRow(row)" ng-class="{'info': selectedRow == row}">
                                     <td>{{row.col1}}</td>
                                     <td>{{row.col2}}</td>
                                 </tr>
@@ -169,13 +169,13 @@
 
             <div class="row" style="margin-bottom: 10px;">
                 <div class="col-sm-3 col-sm-offset-3">
-                    Cards Left: {{deck.length}} <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-show="trash.length < 38">Deal</button>
+                    Cards Left: {{deck.length}} <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-if="trash.length < 38">Deal</button>
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn" ng-class="{ 'btn-info-outline': themeName === 'bs4', 'btn-info': themeName === 'bs3' }" ng-click="reshuffle()" ng-show="gaming">Shuffle</button>
+                    <button class="btn" ng-click="reshuffle(false)" ng-class="{ 'btn-info-outline': themeName === 'bs4', 'btn-info': themeName === 'bs3' }" ng-show="gaming">Shuffle</button>
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn" ng-click="resetDeck()" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }" ng-show="gaming">Reset</button>
+                    <button class="btn" ng-click="reshuffle(true)" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }" ng-show="gaming">Close</button>
                 </div>
             </div>
 

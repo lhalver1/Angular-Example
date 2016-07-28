@@ -14,8 +14,8 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     $scope.trash = [];                  //discard pile
     $scope.deck = getCards();           //Deck of Cards
     $scope.players = [
-        { name: "Player", cards: [], turn: false },
-        { name: "Dealer", cards: [], turn: false } 
+        { name: "Player", cards: [], turn: false, type: "Human" },
+        { name: "Dealer", cards: [], turn: false, type: "CPU" } 
     ];
 
     $scope.selectedRow = null;
@@ -100,6 +100,44 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     }
 
     /**
+     * The next player is a Bot or Dealer, be smart for them.
+     */
+    $scope.goBeABot = function(player) {
+        var total = $scope.cardsTotal(player);
+        var hasSomeOneBusted = false;
+        var highestVisibleTotal = -1;
+
+        for (var index = 0; index < $scope.players.length; index++) {
+            var currPlayer = $scope.players[index];
+            if (currPlayer.turn) {
+                var playersTotal = $scope.cardsTotal(currPlayer);
+
+                if (playersTotal > 21) {
+                    //Do nothing, player broke 21
+                } else if (playersTotal > highestVisibleTotal) {
+                    highestVisibleTotal = playersTotal;
+                }
+            }
+        }
+
+        if (total === 21) {
+            $scope.stay(player);
+        }
+
+        if ( total <= 16 && total < highestVisibleTotal) {
+            $scope.hit(player)
+        } else if( total <= 16 && total >= highestVisibleTotal) {
+            $scope.stay(player);
+        } else if (total > 16 && total < highestVisibleTotal) {
+            $scope.hit(player);
+        } else if( total > 16 && total >= highestVisibleTotal ) {
+            $scope.stay(player);
+        } else { 
+            $scope.stay(player);
+        }
+    }
+
+    /**
      * Deals out cards to the player and the dealer. First makes sure the
      * gaming flag is set and that both hands are empty, if not then it 
      * puts the cards in the hands in the trash pile.
@@ -112,24 +150,38 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
         for (var i = 0; i < $scope.players.length; i++) {
             var currPlayer = $scope.players[i];
             if (currPlayer.cards.length > 0) {
-                $scope.trash.concat(currPlayer.cards);
-                currPlayer.cards = [];
+                for (var index = 0; index < currPlayer.cards.length; index++) {
+                    var currCard = currPlayer.cards[index];
+                    $scope.trash.push(currCard);
+                }
+                currPlayer.cards.splice(0, currPlayer.cards.length);// = [];
             }
         }
 
-        for(var x = 0; x < 2 ; x++) {
-            for (var i = 0; i < $scope.players.length; i++) {
-                var currPlayer = $scope.players[i];
-                var currCard = $scope.deck.splice(0,1)[0];
-                currPlayer.cards.push(currCard);
+        if ($scope.trash.length >= 38) {
+            $scope.reshuffle(false);
+        } else {
+
+            for(var x = 0; x < 2 ; x++) {
+                for (var i = 0; i < $scope.players.length; i++) {
+                    var currPlayer = $scope.players[i];
+                    var currCard = $scope.deck.splice(0,1)[0];
+                    currPlayer.cards.push(currCard);
+                }
             }
+
+            $scope.resetPlayerTurns();
+            $scope.players[$scope.playerTurnIndex].turn = true;
         }
 
-        $scope.resetPlayerTurns();
-        $scope.players[$scope.playerTurnIndex].turn = true;
 
     }//End dealOutCards()
 
+    /**
+     * Goes through the players list and sets the turn flag
+     * to false. Meaning that for the next round that player
+     * hasn't had their turn yet.
+     */
     $scope.resetPlayerTurns = function() {
         $scope.playerTurnIndex = 0;
         for (var index = 0; index < $scope.players.length; index++) {
@@ -145,19 +197,28 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     $scope.hit = function(player) {
         player.cards.push($scope.deck.splice(0,1)[0]);
 
-        if($scope.cardsTotal(player) >= 22) {
-            $scope.playerTurnIndex += 1;
+        if(player.type === "Human") {
+            if($scope.cardsTotal(player) >= 22) {
+                $scope.playerTurnIndex += 1;
 
-            //If the next players turn is out of index for players array
-            //Reset it back to the beginning
-            if ($scope.playerTurnIndex >= $scope.players.length) {
+                //If the next players turn is out of index for players array
+                //Reset it back to the beginning
+                if ($scope.playerTurnIndex >= $scope.players.length) {
 
-                $scope.endRound();
-                
-            } else {
-                $scope.players[$scope.playerTurnIndex].turn = true;
+                    $scope.endRound();
+                    
+                } else {
+                    var nextPlayer = $scope.players[$scope.playerTurnIndex];
+                    nextPlayer.turn = true;
+                    if(nextPlayer.type = "CPU") {
+                        $scope.goBeABot(nextPlayer);
+                    }
+                }
             }
+        } else {
+            $scope.goBeABot(player);
         }
+
 
     }
 
@@ -175,7 +236,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
             $scope.endRound();
 
         } else {
-            $scope.players[$scope.playerTurnIndex].turn = true;
+            var nextPlayer = $scope.players[$scope.playerTurnIndex];
+            nextPlayer.turn = true;
+            if(nextPlayer.type = "CPU") {
+                $scope.goBeABot(nextPlayer);
+            }
         }
     }
 
@@ -187,28 +252,29 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
 
     }
 
-    $scope.reshuffle = function() {
-        $scope.deck = [];
-        $scope.trash = [];
-        $scope.deck = getCards();
-        $scope.userHand = [];
-        $scope.dealerHand = [];
-    }
-
     /**
      * Resets everything, the deck is cleared and then built again.
      * The trash is cleared, the players hand is cleared, and the 
      * dealers hand is cleared. The gaming flag is also set to false.
      */
-    $scope.resetDeck = function() {
-        $scope.deck = [];
-        $scope.trash = [];
+    $scope.reshuffle = function(done) {
+        $scope.deck.splice(0,$scope.deck.length);// = [];
+        $scope.trash.splice(0, $scope.trash.length);// = [];
+
         $scope.deck = getCards();
-        $scope.userHand = [];
-        $scope.dealerHand = [];
-        $scope.gaming = false;
+        $scope.dealOutCards();
+
+        if(done) {
+            $scope.gaming = false;
+        }
     }
 
+    /**
+     * Counts the cards total.
+     * 
+     * @param  {object} player - The player whose cards need to be added up
+     * @returns {int} total - The sum of the players cards
+     */
     $scope.cardsTotal = function(player) {
         var acesArr = [];
         var total = 0;
