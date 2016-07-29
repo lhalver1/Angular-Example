@@ -121,19 +121,31 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
         }
 
         if (total === 21) {
-            $scope.stay(player);
+            $timeout(function() {
+                $scope.stay(player);
+            }, 2000);
         }
 
         if ( total <= 16 && total < highestVisibleTotal) {
-            $scope.hit(player)
+            $timeout(function() {
+                $scope.hit(player)
+            }, 2000);
         } else if( total <= 16 && total >= highestVisibleTotal) {
-            $scope.stay(player);
+            $timeout(function() {
+                $scope.stay(player);
+            }, 2000);
         } else if (total > 16 && total < highestVisibleTotal) {
-            $scope.hit(player);
+            $timeout(function() {
+                $scope.hit(player);
+            }, 2000);
         } else if( total > 16 && total >= highestVisibleTotal ) {
-            $scope.stay(player);
+            $timeout(function() {
+                $scope.stay(player);
+            }, 2000);
         } else { 
-            $scope.stay(player);
+            $timeout(function() {
+                $scope.stay(player);
+            }, 2000);
         }
     }
 

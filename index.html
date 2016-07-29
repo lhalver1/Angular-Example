@@ -189,9 +189,9 @@
                         <div class="row">
                             <div class="col-xs-12" ng-if="playerTurnIndex === $index || player.turn"><b>{{cardsTotal(player)}}</b></div>
                         </div>
-                        <div class="row" ng-if="playerTurnIndex === $index">
+                        <div class="row" ng-if="playerTurnIndex === $index && player.type === 'Human'">
                             <div class="col-xs-4">
-                                <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs4' }" ng-click="hit(player)" ng-show="gaming">Hit</button>
+                                <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit(player)" ng-show="gaming">Hit</button>
                             </div>
                             <div class="col-xs-3">
                                 <button class="btn" ng-class="{ 'btn-warning-outline': themeName === 'bs4', 'btn-warning': themeName === 'bs3' }" ng-click="stay(player)" ng-show="gaming">Stay</button>
