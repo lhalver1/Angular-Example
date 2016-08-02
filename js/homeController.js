@@ -222,7 +222,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
             }
         }
 
-        if ($scope.trash.length >= 38) {
+        if ($scope.trash.length >= 35) {
             $scope.reshuffle(false);
         } else {
 
@@ -251,6 +251,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
             turn: false,
             type: "CPU"
         });
+        $scope.reshuffle(false);
     }
 
     /**
