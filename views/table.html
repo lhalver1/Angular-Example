@@ -1,0 +1,57 @@
+<div class="wrapper">
+    <div class="jumbotron">
+        <h1>Bootstrap <span class="text-info" ng-if="themeName === 'bs4'">4</span> <span class="text-info" ng-if="themeName === 'bs3'">3</span></h1>
+        <p>
+            <span class="text-success">Lookin Good <span id="name" ng-click="editing = !editing" ng-show="!editing">{{name}}</span></span>
+            <input id="nameField" type="text" class="form-control" ng-model="name" ng-show="editing" />
+            <button class="btn" ng-class="{ 'btn-success-outline': themeName =='bs4', 'btn-success': themeName == 'bs3' }" ng-click="editing = !editing"
+                ng-show="editing"><span class="glyphicon glyphicon-ok" ng-show="themeName == 'bs3'" aria-hidden="true"></span><span ng-show="themeName == 'bs4'">Done</span></button>
+        </p>
+    </div>
+
+    <div class="row searchRow">
+        <div class="col-xs-4 col-xs-offset-6">
+            <input id="searchBox" class="form-control" placeholder="Search" ng-model="searchTxt" />
+        </div>
+        <div class="col-xs-2">
+            <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }">Search</button>
+        </div>
+    </div>
+
+    <div class="row editRow" ng-show="selectedRow">
+        <div class="col-xs-6">
+            <label>Column 1</label>
+            <form ng-submit="selectedRow = null">
+                <input type="text" class="form-control" ng-model="selectedRow.col1" placeholder="Column 1" />
+            </form>
+        </div>
+        <div class="col-xs-6">
+            <label>Column 2</label>
+            <form ng-submit="selectedRow = null">
+                <input type="text" class="form-control" ng-model="selectedRow.col2" placeholder="Column 2" />
+            </form>
+        </div>
+    </div>
+
+    <div class="row table">
+        <div class="col-xs-12">
+            <div class="tableDiv">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Column1</th>
+                            <th>Column2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in rows | filter:searchTxt" ng-click="electTableRow(row)" ng-class="{'info': selectedRow == row}">
+                            <td>{{row.col1}}</td>
+                            <td>{{row.col2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- END table row -->
+
+</div>

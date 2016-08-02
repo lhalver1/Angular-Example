@@ -1,7 +1,5 @@
-var myApp = angular.module('myApp', []);
 
 //myApp.directive('myDirective', function() {});
-//myApp.factory('myService', function() {});
 
 // Setup the filter
 myApp.filter('hideValue', function() {
@@ -33,10 +31,17 @@ myApp.filter('hideValue', function() {
   }
 });
 
-myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
+myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     $scope.name = 'Superhero';
     $scope.editing = false;
-    $scope.themeName = "bs4";
+    $scope.themeName = mainService.getTheme();
+
+    $scope.$watch(mainService.getTheme(), function(newVal) {
+        if (newVal) {
+            console.log("Theme switched to: " + newVal);
+            $scope.themeName = mainService.getTheme;
+        }
+    });
 
     //Black Jack vars
     $scope.gaming = false;              //Flag for gaming
@@ -364,13 +369,18 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     $scope.reshuffle = function(done) {
         $scope.deck.splice(0,$scope.deck.length);// = [];
         $scope.trash.splice(0, $scope.trash.length);// = [];
-
+        
         $scope.deck = getCards();
-        $scope.dealOutCards();
 
         if(done) {
             $scope.gaming = false;
+            $scope.players.splice(0, $scope.players.length);
+            $scope.players.push({ name: "Player", cards: [], turn: false, type: "Human" });
+            $scope.players.push({ name: "Dealer", cards: [], turn: false, type: "CPU" });
+        } else {
+            $scope.dealOutCards();
         }
+
     }
 
     /**
