@@ -17,6 +17,13 @@ table.table tbody tr:hover {
   /*width: 150px;*/
   display: inline;
 }
+.playerName {
+  color: #1a0dab;
+}
+.playerName:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 .searchRow, .editRow {
   /* background-color: #000; */
   padding: 5px 0;
@@ -27,10 +34,11 @@ table.table tbody tr:hover {
 
 /*CARDS*/
 .hand { display: inline-block; }
-.card {
+.myCard {
+  display: inline-block;
   height: 180px;
   width: 150px;
-  border: 1px solid #000;
+  border: 1px solid #e5e5e5;
   border-radius: 10px;
   padding: 10px;
   margin: 5px 3px;
@@ -43,7 +51,7 @@ table.table tbody tr:hover {
   font-size: 2.5em;
   text-align: center;
 }
-.card .glyphicon {
+.myCard .glyphicon {
   font-size: 2em;
 }
 .glyphicon-heart {

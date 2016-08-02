@@ -3,6 +3,36 @@ var myApp = angular.module('myApp', []);
 //myApp.directive('myDirective', function() {});
 //myApp.factory('myService', function() {});
 
+// Setup the filter
+myApp.filter('hideValue', function() {
+
+  // Create the return function
+  // set the required parameter name to **number**
+  return function(str) {
+
+      if(str === "Ace") {
+          return "A";
+      } else if(str === "King") {
+          return "K";
+      } else if(str === "Queen") {
+          return "Q";
+      } else if(str === "Jack") {
+          return "J";
+      } else if(str === "Diamonds") {
+          return "D";
+      } else if(str === "Hearts") {
+          return "H";
+      } else if(str === "Spades") {
+          return "S";
+      } else if(str === "Clubs") {
+          return "C";
+      } else {
+          return str;
+      }
+
+  }
+});
+
 myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     $scope.name = 'Superhero';
     $scope.editing = false;
@@ -15,8 +45,9 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
     $scope.deck = getCards();           //Deck of Cards
     $scope.players = [
         { name: "Player", cards: [], turn: false, type: "Human" },
-        { name: "Dealer", cards: [], turn: false, type: "CPU" } 
+        { name: "Dealer", cards: [], turn: false, type: "CPU" }
     ];
+    $scope.selectedPlayer = null;
 
     $scope.selectedRow = null;
     $scope.rows = generateRows(Math.round(Math.random() * (5 - 1) + 1));
@@ -104,45 +135,65 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
      */
     $scope.goBeABot = function(player) {
         var total = $scope.cardsTotal(player);
-        var hasSomeOneBusted = false;
+        var bustedPlayers = [];
         var highestVisibleTotal = -1;
+        var thisPlayersIndex = -1;
 
         for (var index = 0; index < $scope.players.length; index++) {
             var currPlayer = $scope.players[index];
-            if (currPlayer.turn) {
-                var playersTotal = $scope.cardsTotal(currPlayer);
 
-                if (playersTotal > 21) {
-                    //Do nothing, player broke 21
-                } else if (playersTotal > highestVisibleTotal) {
-                    highestVisibleTotal = playersTotal;
+            if (currPlayer != player) {
+                var playersTotal = $scope.cardsTotal(currPlayer);
+                if (currPlayer.turn || playersTotal === 21) {
+
+                    if (playersTotal > 21) {
+                        bustedPlayers.push(currPlayer);
+                    } else if (playersTotal > highestVisibleTotal) {
+                        highestVisibleTotal = playersTotal;
+                    }
                 }
+            } else {
+                thisPlayersIndex = index+1;
             }
+
         }
 
+        // var remainingPlayersThatHaventBusted = ($scope.players.length-1) - bustedPlayers.length;
+        var playersInfrontOfMeThatHaventBusted = thisPlayersIndex-1 - bustedPlayers.length;
+        var numPlayersBehindMe = $scope.players.length - thisPlayersIndex;
         if (total === 21) {
             $timeout(function() {
                 $scope.stay(player);
             }, 2000);
-        }
-
-        if ( total <= 16 && total < highestVisibleTotal) {
-            $timeout(function() {
-                $scope.hit(player)
-            }, 2000);
-        } else if( total <= 16 && total >= highestVisibleTotal) {
-            $timeout(function() {
-                $scope.stay(player);
-            }, 2000);
-        } else if (total > 16 && total < highestVisibleTotal) {
+        } else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
             }, 2000);
-        } else if( total > 16 && total >= highestVisibleTotal ) {
+        } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total ) {
             $timeout(function() {
                 $scope.stay(player);
             }, 2000);
-        } else { 
+        } else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
+            $timeout(function() {
+                $scope.stay(player);
+            }, 2000);
+        } else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal > total) {
+            $timeout(function() {
+                $scope.hit(player);
+            }, 2000);
+        }  else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
+            $timeout(function() {
+                $scope.hit(player);
+            }, 2000);
+        } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal > total) {
+            $timeout(function() {
+                $scope.hit(player);
+            }, 2000);
+        7} else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
+            $timeout(function() {
+                $scope.hit(player);
+            }, 2000);
+        8} else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
             }, 2000);
@@ -188,6 +239,18 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
 
 
     }//End dealOutCards()
+
+    /**
+     * Add a new player to the game
+     */
+    $scope.addNewPlayer = function() {
+        $scope.players.splice($scope.players.length-1, 0, {
+            name: "Bot " + $scope.players.length,
+            cards: [],
+            turn: false,
+            type: "CPU"
+        });
+    }
 
     /**
      * Goes through the players list and sets the turn flag
@@ -314,6 +377,18 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
         }
 
         return total;
+    }
+
+    /**
+     * Select the player to edit their name.
+     * @param  {object} player - The player to be selected to edit their name
+     */
+    $scope.selectPlayer = function(player) {
+        if ($scope.selectedPlayer === player) {
+            $scope.selectedPlayer = null;
+        } else {
+            $scope.selectedPlayer = player;
+        }
     }
     
 });

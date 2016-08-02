@@ -168,11 +168,10 @@
             </div><!-- END table row -->
 
             <div class="row" style="margin-bottom: 10px;">
-                <div class="col-sm-3 col-sm-offset-3">
+                <div class="col-sm-9">
                     Cards Left: {{deck.length}} <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-if="trash.length < 38">Deal</button>
-                </div>
-                <div class="col-sm-1">
                     <button class="btn" ng-click="reshuffle(false)" ng-class="{ 'btn-info-outline': themeName === 'bs4', 'btn-info': themeName === 'bs3' }" ng-show="gaming">Shuffle</button>
+                    <button class="btn" ng-click="addNewPlayer()" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-show="gaming">Add Player</button>
                 </div>
                 <div class="col-sm-1">
                     <button class="btn" ng-click="reshuffle(true)" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }" ng-show="gaming">Close</button>
@@ -184,10 +183,18 @@
                 <div class="row" ng-repeat="player in players" >
                     <div class="col-md-2">
                         <div class="row">
-                            <div class="col-xs-12">{{player.name}}</div>
+                            <div ng-if="player.name != 'Dealer'">
+                                <div class="col-xs-12 playerName" ng-click="selectPlayer(player)" ng-if="selectedPlayer != player">{{player.name}}</div>
+                                <form ng-submit="selectPlayer(player)">
+                                    <input class="form-control" type="text" ng-model="player.name" ng-if="selectedPlayer === player" />
+                                </form>
+                            </div>
+                            <div ng-if="player.name === 'Dealer'">
+                                <div class="col-xs-12">{{player.name}}</div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12" ng-if="playerTurnIndex === $index || player.turn"><b>{{cardsTotal(player)}}</b></div>
+                            <div class="col-xs-12" ng-if="playerTurnIndex === $index || player.turn || cardsTotal(player) == 21"><b>{{cardsTotal(player)}}</b></div>
                         </div>
                         <div class="row" ng-if="playerTurnIndex === $index && player.type === 'Human'">
                             <div class="col-xs-4">
@@ -200,17 +207,17 @@
                     </div>
                     <div class="col-md-10">
 
-                        <div class="hand" ng-repeat="card in player.cards">
-                            <div class="card">
-                                <div class="card-details" ng-show="$parent.$index === 0 || $index != 0 || playerTurnIndex === $parent.$index || player.turn">
+                        <div class="hand">
+                            <div class="myCard" ng-repeat="card in player.cards">
+                                <div class="card-details" ng-if="$parent.$index === 0 || $index != 0 || playerTurnIndex === $parent.$index || player.turn || cardsTotal(player) == 21">
                                     <span class="glyphicon" aria-hidden="true"
                                     ng-class="{ 
                                         'glyphicon-heart': card.suit === 'Hearts',
                                         'glyphicon-play': card.suit === 'Diamonds',
                                         'glyphicon-cloud': card.suit === 'Clubs',
                                         'glyphicon-tree-deciduous': card.suit === 'Spades' }"></span>
-                                    <p class="card-suit">{{card.suit}}</p>
-                                    <p class="card-value">{{card.value}}</p>
+                                    <p class="card-suit">{{card.suit | hideValue}}</p>
+                                    <p class="card-value">{{card.value | hideValue}}</p>
                                     <span class="card-bottom glyphicon" aria-hidden="true"
                                     ng-class="{ 
                                         'glyphicon-heart': card.suit === 'Hearts',
