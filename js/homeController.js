@@ -36,12 +36,12 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     $scope.editing = false;
     $scope.themeName = mainService.getTheme();
 
-    $scope.$watch(mainService.getTheme(), function(newVal) {
+    $scope.$watch(function(){return mainService.getTheme();}, function(newVal, oldValue) {
         if (newVal) {
-            console.log("Theme switched to: " + newVal);
-            $scope.themeName = mainService.getTheme;
+            console.log("HOMECTRL: Theme switched to: " + newVal);
+            $scope.themeName = newVal;
         }
-    });
+    }, true);
 
     //Black Jack vars
     $scope.gaming = false;              //Flag for gaming

@@ -3,12 +3,12 @@ myApp.controller('TableController', function MyCtrl($scope, $timeout, mainServic
     $scope.editing = false;
     $scope.themeName = mainService.getTheme();
 
-    $scope.$watch(mainService.getTheme(), function(newVal) {
+    $scope.$watch(function() {return mainService.getTheme();}, function(newVal, oldValue) {
         if (newVal) {
-            console.log("Theme switched to: " + newVal);
-            $scope.themeName = mainService.getTheme;
+            console.log("TABLECTRL: Theme switched to: " + newVal);
+            $scope.themeName = newVal;
         }
-    });
+    }, true);
 
     $scope.selectedRow = null;
     $scope.rows = generateRows(Math.round(Math.random() * (5 - 1) + 1));
