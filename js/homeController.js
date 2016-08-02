@@ -47,6 +47,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
         { name: "Player", cards: [], turn: false, type: "Human" },
         { name: "Dealer", cards: [], turn: false, type: "CPU" }
     ];
+    $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
 
     $scope.selectedRow = null;
@@ -319,12 +320,39 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout) {
         }
     }
 
+    /**
+     * The ends the current round by determining a winner and 
+     * then after 4sec dealing out new cards.
+     */
     $scope.endRound = function() {
+        $scope.determineWinner();
 
         $timeout(function() {
+            $scope.winningPlayers.splice(0, $scope.winningPlayers.length);
             $scope.dealOutCards();
-        }, 3000);
+        }, 4000);
 
+    }
+
+    /**
+     * This determines the winner for the round.
+     */
+    $scope.determineWinner = function() {
+        $scope.winningPlayers.splice(0, $scope.winningPlayers.length);// = [];
+        var highestTotal = -1;
+
+        for (var index = 0; index < $scope.players.length; index++) {
+            var currPlayer = $scope.players[index];
+            var currPlayersTotal = $scope.cardsTotal(currPlayer);
+
+            if (currPlayersTotal > highestTotal && currPlayersTotal <= 21) {
+                $scope.winningPlayers.splice(0, $scope.winningPlayers.length);
+                $scope.winningPlayers.push(currPlayer);
+                highestTotal = currPlayersTotal;
+            } else if (currPlayersTotal === highestTotal){
+                $scope.winningPlayers.push(currPlayer);
+            }
+        }
     }
 
     /**
