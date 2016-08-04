@@ -26,24 +26,24 @@
             <div class="col-md-2">
                 <div class="row">
                     <div ng-if="player.name != 'Dealer'">
-                        <div class="col-xs-12 playerName" ng-click="selectPlayer(player)" ng-if="selectedPlayer != player">{{player.name}}</div>
+                        <div class="col-md-12 playerName" ng-click="selectPlayer(player)" ng-if="selectedPlayer != player">{{player.name}}</div>
                         <form ng-submit="selectPlayer(player)">
                             <input class="form-control" type="text" ng-model="player.name" ng-if="selectedPlayer === player" />
                         </form>
                         <button class="btn" ng-click="removePlayer(player)" ng-if="selectedPlayer === player && $index != 0" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }">Remove</button>
                     </div>
                     <div ng-if="player.name === 'Dealer'">
-                        <div class="col-xs-12">{{player.name}}</div>
+                        <div class="col-md-12">{{player.name}}</div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12" ng-if="playerTurnIndex === $index || player.turn || cardsTotal(player) == 21"><b>{{cardsTotal(player)}}</b></div>
+                    <div class="col-md-12" ng-if="playerTurnIndex === $index || player.turn || cardsTotal(player) == 21"><b>{{cardsTotal(player)}}</b></div>
                 </div>
                 <div class="row" ng-if="playerTurnIndex === $index && player.type === 'Human'">
-                    <div class="col-xs-4">
+                    <div class="col-md-6">
                         <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit(player)" ng-show="gaming">Hit</button>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-md-6">
                         <button class="btn" ng-class="{ 'btn-warning-outline': themeName === 'bs4', 'btn-warning': themeName === 'bs3' }" ng-click="stay(player)" ng-show="gaming">Stay</button>
                     </div>
                 </div>
