@@ -4,7 +4,7 @@
         <div class="col-sm-10">
             Cards Left: {{deck.length}} <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-if="trash.length < 38">Deal</button>
             <button class="btn" ng-click="reshuffle(false)" ng-class="{ 'btn-info-outline': themeName === 'bs4', 'btn-info': themeName === 'bs3' }" ng-show="gaming">Shuffle</button>
-            <button class="btn" ng-click="addNewPlayer()" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-show="gaming">Add Player</button>
+            <button class="btn" ng-click="addNewPlayer()" ng-disabled="players.length > 5" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-show="gaming">Add Player</button>
         </div>
         <div class="col-sm-2">
             <button class="btn" style="float:right;" ng-click="reshuffle(true)" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }" ng-show="gaming">Close</button>
@@ -30,6 +30,7 @@
                         <form ng-submit="selectPlayer(player)">
                             <input class="form-control" type="text" ng-model="player.name" ng-if="selectedPlayer === player" />
                         </form>
+                        <button class="btn" ng-click="removePlayer(player)" ng-if="selectedPlayer === player && $index != 0" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }">Remove</button>
                     </div>
                     <div ng-if="player.name === 'Dealer'">
                         <div class="col-xs-12">{{player.name}}</div>

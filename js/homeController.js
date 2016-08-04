@@ -260,6 +260,19 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     }
 
     /**
+     * Removes the given player from the list of players.
+     * @param  {object} player - The player object to be removed
+     */
+    $scope.removePlayer = function(player) {
+        for (var index = 0; index < $scope.players.length; index++) {
+            var currPlayer = $scope.players[index];
+            if (currPlayer === player) {
+                $scope.players.splice(index, 1);
+            }
+        }
+    }
+
+    /**
      * Goes through the players list and sets the turn flag
      * to false. Meaning that for the next round that player
      * hasn't had their turn yet.
