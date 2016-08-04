@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="row in rows | filter:searchTxt" ng-click="electTableRow(row)" ng-class="{'info': selectedRow == row}">
+                        <tr ng-repeat="row in rows | filter:searchTxt" ng-click="selectTableRow(row)" ng-class="{'info': selectedRow == row}">
                             <td>{{row.col1}}</td>
                             <td>{{row.col2}}</td>
                         </tr>
