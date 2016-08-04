@@ -58,8 +58,8 @@
                                 'glyphicon-play': card.suit === 'Diamonds',
                                 'glyphicon-cloud': card.suit === 'Clubs',
                                 'glyphicon-tree-deciduous': card.suit === 'Spades' }"></span>
-                            <p class="card-suit">{{card.suit | hideValue}}</p>
-                            <p class="card-value">{{card.value | hideValue}}</p>
+                            <p class="card-suit">{{card.suit}}</p>
+                            <p class="card-value">{{card.value}}</p>
                             <span class="card-bottom glyphicon" aria-hidden="true"
                             ng-class="{ 
                                 'glyphicon-heart': card.suit === 'Hearts',
