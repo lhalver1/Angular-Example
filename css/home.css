@@ -33,9 +33,9 @@ table.table tbody tr:hover {
 
 
 /*CARDS*/
-.hand { display: inline-block; }
+/*.hand { display: inline-block; }*/
 .myCard {
-  display: inline-block;
+  /*display: inline-block;*/
   height: 180px;
   width: 150px;
   border: 1px solid #e5e5e5;

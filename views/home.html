@@ -51,7 +51,7 @@
             <div class="col-md-10">
 
                 <div class="hand">
-                    <div class="myCard" ng-repeat="card in player.cards">
+                    <div class="myCard" style="float: left;" ng-repeat="card in player.cards">
                         <div class="card-details" ng-if="$parent.$index === 0 || $index != 0 || playerTurnIndex === $parent.$index || player.turn || cardsTotal(player) == 21">
                             <span class="glyphicon" aria-hidden="true"
                             ng-class="{ 
