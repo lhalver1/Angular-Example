@@ -22,7 +22,7 @@
         <div class="col-xs-6">
             <label>Column 1</label>
             <form ng-submit="selectedRow = null">
-                <input type="text" class="form-control" ng-model="selectedRow.col1" placeholder="Column 1" />
+                <input type="text" class="form-control" ng-model="selectedRow.col1" placeholder="Column 1" input-focus="selectedRow != null" />
             </form>
         </div>
         <div class="col-xs-6">

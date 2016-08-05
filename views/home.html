@@ -28,7 +28,7 @@
                     <div ng-if="player.name != 'Dealer'">
                         <div class="col-md-12 playerName" ng-click="selectPlayer(player)" ng-if="selectedPlayer != player">{{player.name}}</div>
                         <form ng-submit="selectPlayer(player)">
-                            <input class="form-control" type="text" ng-model="player.name" ng-if="selectedPlayer === player" />
+                            <input class="form-control" type="text" ng-model="player.name" ng-if="selectedPlayer === player" input-focus="selectedPlayer === player" />
                         </form>
                         <button class="btn" ng-click="removePlayer(player)" ng-if="selectedPlayer === player && $index != 0" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }">Remove</button>
                     </div>
