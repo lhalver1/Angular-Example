@@ -2,6 +2,8 @@
 
 This is me having fun with **Angular** and Twitter **Bootstrap**
 
+Here is a [Demo](https://lhalver1.github.io/Angular-Example) of what this project looks like.
+
 In here there are examples of the built in Angular **Router**, Angular **Services**, and much more.
 I have built my own filter as well as using the default built in Angular filter to filter a
 table.
