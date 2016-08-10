@@ -175,7 +175,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             $timeout(function() {
                 $scope.hit(player);
             }, 2000);
-        } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total ) {
+        } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
             }, 2000);
@@ -187,7 +187,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             $timeout(function() {
                 $scope.hit(player);
             }, 2000);
-        }  else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
+        } else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.hit(player);
             }, 2000);
@@ -195,11 +195,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             $timeout(function() {
                 $scope.hit(player);
             }, 2000);
-        7} else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
+        } else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
             }, 2000);
-        8} else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
+        } else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
             }, 2000);
