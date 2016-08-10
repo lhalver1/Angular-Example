@@ -101,15 +101,17 @@
         <div class="row">
             <div class="col-md-12">
                 <form name="myForm">
-                    <label>
-                        <input type="radio" ng-model="themeName" value="bs4" />
-                        Bootstrap 4
-                    </label><br/>
+                    <div class="input-group">
+                        <label style="display: inline-block;">
+                            <input type="radio" ng-model="themeName" value="bs4" />
+                            Bootstrap 4
+                        </label><br/>
 
-                    <label>
-                        <input type="radio" ng-model="themeName" value="bs3" />
-                        Bootstrap 3
-                    </label>
+                        <label style="display: inline-block;">
+                            <input type="radio" ng-model="themeName" value="bs3" />
+                            Bootstrap 3
+                        </label>
+                    </div>
                 </form>
             </div>
         </div>
@@ -121,8 +123,6 @@
         <!-- MAIN CONTENT AND INJECTED VIEWS -->
         <div id="main">
 
-            <!-- angular templating -->
-            <!-- this is where content will be injected -->
             <div ng-view></div>
 
         </div>
