@@ -32,14 +32,12 @@ myApp.filter('hideValue', function() {
 });
 
 myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
-    $scope.name = 'Superhero';
-    $scope.editing = false;
     $scope.themeName = mainService.getTheme();
 
     $scope.$watch(function(){return mainService.getTheme();}, function(newVal, oldValue) {
         if (newVal) {
-            console.log("HOMECTRL: Theme switched to: " + newVal);
             $scope.themeName = newVal;
+            console.log("HOMECTRL: Theme switched to: " + newVal);
         }
     }, true);
 
@@ -54,36 +52,6 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     ];
     $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
-
-    $scope.selectedRow = null;
-    $scope.rows = generateRows(Math.round(Math.random() * (5 - 1) + 1));
-
-
-    $scope.selectTableRow = function (row) {
-        if ($scope.selectedRow == row) {
-            $scope.selectedRow = null;
-        } else {
-            $scope.selectedRow = row;
-        }
-    }
-
-    $scope.editName = function () {
-        $scope.editing = true;
-    }
-
-    function generateRows(x) {
-        var rows = [], j = x;
-
-        for (var i = 0; i < x; i++) {
-            rows.push({
-                col1: "Data" + i,
-                col2: "Data" + j
-            });
-            j--;
-        }
-
-        return rows;
-    }
     
     /**
      * Builds the deck of cards. Creates an array of card objects with a

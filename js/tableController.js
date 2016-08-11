@@ -5,8 +5,8 @@ myApp.controller('TableController', function MyCtrl($scope, $timeout, mainServic
 
     $scope.$watch(function() {return mainService.getTheme();}, function(newVal, oldValue) {
         if (newVal) {
-            console.log("TABLECTRL: Theme switched to: " + newVal);
             $scope.themeName = newVal;
+            console.log("TABLECTRL: Theme switched to: " + newVal);
         }
     }, true);
 
