@@ -249,6 +249,24 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     }
 
     /**
+     * 
+     */
+    $scope.movePlayer = function(dir, player, currIndex) {
+        var toIndex = -1;
+
+        if (dir === 'down') {
+            toIndex = currIndex + 1;
+        } else {
+            //dir === 'up'
+            toIndex = currIndex - 1;
+        }
+
+        var temp = $scope.players[currIndex];
+        $scope.players[currIndex] = $scope.players[toIndex];
+        $scope.players[toIndex] = temp;
+    }
+
+    /**
      * Goes through the players list and sets the turn flag
      * to false. Meaning that for the next round that player
      * hasn't had their turn yet.
