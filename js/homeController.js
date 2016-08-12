@@ -184,6 +184,8 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             $scope.gaming = true;
         }
 
+        // Take each players cards and push them to the trash and then
+        // clear the players hand.
         for (var i = 0; i < $scope.players.length; i++) {
             var currPlayer = $scope.players[i];
             if (currPlayer.cards.length > 0) {
@@ -195,10 +197,13 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             }
         }
 
-        if ($scope.trash.length >= 35) {
+        // If there are 12 or less cards remaining do a reshuffle.
+        if ($scope.trash.length >= 38) {
             $scope.reshuffle(false);
         } else {
 
+            // Pass out cards to each player, each player gets 1 card
+            // then each player gets their 2nd card.
             for(var x = 0; x < 2 ; x++) {
                 for (var i = 0; i < $scope.players.length; i++) {
                     var currPlayer = $scope.players[i];
@@ -207,12 +212,15 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
                 }
             }
 
+            // Reset each players turn so that in the new hand, they will
+            // get a turn. Then set the first players turn to true to start
+            // the hand.
             $scope.resetPlayerTurns();
             $scope.players[$scope.playerTurnIndex].turn = true;
         }
 
 
-    }//End dealOutCards()
+    }
 
     /**
      * Add a new player to the game
