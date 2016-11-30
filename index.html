@@ -46,6 +46,14 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#/">Home</a></li>
                     <li><a href="#table">Table</a></li>
+                    <li class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" name="bs4" ng-model="themeName" value="bs4" /> Bootstrap 4
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="bs3" ng-model="themeName" value="bs3" /> Bootstrap 3
+                        </label>
+                    </li>
                     <!--<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -59,25 +67,15 @@
                         </ul>
                     </li>-->
                 </ul>
-                <form class="navbar-form navbar-left">
+                <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
-                <ul class="nav navbar-nav navbar-right">
+                <!--<ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                    </li>
-                </ul>
+                </ul>-->
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
@@ -92,6 +90,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#table">Table</a>
                 </li>
+                <li class="nav-item radio">
+                    <label class="radio-inline">
+                        <input type="radio" name="bs4" ng-model="themeName" value="bs4" /> Bootstrap 4
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="bs3" ng-model="themeName" value="bs3" /> Bootstrap 3
+                    </label>
+                </li>
             </ul>
             <form class="form-inline pull-xs-right" style="margin-bottom: 0px;">
                 <input class="form-control" type="text" placeholder="Search">
@@ -99,7 +105,7 @@
             </form>
         </nav>
 
-        <div class="row">
+        <!--<div class="row">
             <div class="col-md-12">
                 <form name="myForm">
                     <div class="input-group">
@@ -115,7 +121,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div>-->
 
     </div> <!-- End IndexCtrl -->
 
