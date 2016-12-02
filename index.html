@@ -3,12 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>Git Learn/Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-
-    <!-- Bootstrap 4 -->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <script src="lib/angular-1.5.8/angular.js"></script>
     <script src="lib/angular-1.5.8/angular-route.js"></script>
@@ -24,29 +21,30 @@
 
 <body ng-app="myApp">
     <div ng-controller="IndexCtrl">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" ng-if="themeName === 'bs4'">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" ng-if="themeName === 'bs3'">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+        
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" ng-if="themeName === 'bs3'">-->
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"  ng-if="themeName === 'bs3'" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
 
-        <nav class="navbar navbar-default" ng-show="themeName === 'bs3'">
-
+        <!-- Bootstrap 3 navbar -->
+        <nav  class="navbar navbar-inverse" ng-if="themeName === 'bs3'">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Bootstrap 3</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Bootstrap 3</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#/">Home</a></li>
                     <li><a href="#table">Table</a></li>
-                    <li class="radio">
+                    <li class="radio" style="color: #fff;">
                         <label class="radio-inline">
                             <input type="radio" name="bs4" ng-model="themeName" value="bs4" /> Bootstrap 4
                         </label>
@@ -54,74 +52,48 @@
                             <input type="radio" name="bs3" ng-model="themeName" value="bs3" /> Bootstrap 3
                         </label>
                     </li>
-                    <!--<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>-->
                 </ul>
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-                <!--<ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
-                </ul>-->
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+            </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
         </nav>
-        
-        <nav class="navbar navbar-dark bg-inverse" ng-show="themeName === 'bs4'" style="margin-bottom: 20px;">
-            <!-- Navbar content -->
+
+
+        <nav class="navbar navbar-dark bg-inverse" style="margin-bottom: 20px;">
             <a class="navbar-brand" href="#/">Bootstrap 4</a>
-            <ul class="nav navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#table">Table</a>
-                </li>
-                <li class="nav-item radio">
-                    <label class="radio-inline">
-                        <input type="radio" name="bs4" ng-model="themeName" value="bs4" /> Bootstrap 4
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="bs3" ng-model="themeName" value="bs3" /> Bootstrap 3
-                    </label>
-                </li>
-            </ul>
-            <form class="form-inline pull-xs-right" style="margin-bottom: 0px;">
-                <input class="form-control" type="text" placeholder="Search">
-                <button class="btn btn-info-outline" type="submit">Search</button>
-            </form>
-        </nav>
-
-        <!--<div class="row">
-            <div class="col-md-12">
-                <form name="myForm">
-                    <div class="input-group">
-                        <label style="display: inline-block;">
-                            <input type="radio" ng-model="themeName" value="bs4" />
-                            Bootstrap 4
-                        </label><br/>
-
-                        <label style="display: inline-block;">
-                            <input type="radio" ng-model="themeName" value="bs3" />
-                            Bootstrap 3
+            <button class="navbar-toggler hidden-md-up pull-xs-right" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            <div id="navbar-content" class="collapse navbar-toggleable-sm">
+                <!-- Navbar content -->
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#table">Table</a>
+                    </li>
+                    <!--<li class="nav-item radio">
+                        <label class="radio-inline">
+                            <input type="radio" name="bs4" ng-model="themeName" value="bs4" /> Bootstrap 4
                         </label>
-                    </div>
+                        <label class="radio-inline">
+                            <input type="radio" name="bs3" ng-model="themeName" value="bs3" /> Bootstrap 3
+                        </label>
+                    </li>-->
+                </ul>
+                <form class="form-inline pull-xs-right" style="margin-bottom: 0px;">
+                    <input class="form-control" type="text" placeholder="Search">
+                    <button class="btn btn-info-outline" type="submit">Search</button>
                 </form>
             </div>
-        </div>-->
+            
+        </nav>
 
     </div> <!-- End IndexCtrl -->
 
