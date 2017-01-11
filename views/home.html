@@ -30,7 +30,7 @@
                 <div class="row">
                     <div ng-if="player.name != 'Dealer'">
                         <div class="col-md-12 playerName" ng-click="selectPlayer(player)" ng-if="selectedPlayer != player">
-                            {{player.name}}
+                            {{player.name}}: {{player.wins}}-{{player.losses}}
                         </div>
                         <form ng-submit="selectPlayer(player)">
                             <input class="form-control" type="text"
@@ -40,7 +40,7 @@
                         </form>
                     </div>
                     <div ng-if="player.name === 'Dealer'">
-                        <div class="col-md-12">{{player.name}}</div>
+                        <div class="col-md-12">{{player.name}}: {{player.wins}}-{{player.losses}}</div>
                     </div>
                 </div>
                 <div class="row">

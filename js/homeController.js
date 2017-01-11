@@ -47,8 +47,8 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     $scope.trash = [];                  //discard pile
     $scope.deck = getCards();           //Deck of Cards
     $scope.players = [
-        { name: "Player", cards: [], turn: false, type: "Human" },
-        { name: "Dealer", cards: [], turn: false, type: "CPU" }
+        { name: "Player", cards: [], turn: false, type: "Human", wins: 0, losses: 0 },
+        { name: "Dealer", cards: [], turn: false, type: "CPU", wins: 0, losses: 0 }
     ];
     $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
@@ -230,7 +230,9 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             name: "Bot " + $scope.players.length,
             cards: [],
             turn: false,
-            type: "CPU"
+            type: "CPU",
+            wins: 0,
+            losses: 0
         });
         $scope.reshuffle(false);
     }
@@ -264,6 +266,9 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         var temp = $scope.players[currIndex];
         $scope.players[currIndex] = $scope.players[toIndex];
         $scope.players[toIndex] = temp;
+        if ($scope.players[currIndex].type == "CPU") {
+            $scope.goBeABot();
+        }
     }
 
     /**
@@ -299,7 +304,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
                 } else {
                     var nextPlayer = $scope.players[$scope.playerTurnIndex];
                     nextPlayer.turn = true;
-                    if(nextPlayer.type = "CPU") {
+                    if(nextPlayer.type == "CPU") {
                         $scope.goBeABot(nextPlayer);
                     }
                 }
@@ -327,7 +332,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         } else {
             var nextPlayer = $scope.players[$scope.playerTurnIndex];
             nextPlayer.turn = true;
-            if(nextPlayer.type = "CPU") {
+            if(nextPlayer.type == "CPU") {
                 $scope.goBeABot(nextPlayer);
             }
         }
@@ -366,6 +371,22 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
                 $scope.winningPlayers.push(currPlayer);
             }
         }
+
+        for (var i = 0; i < $scope.players.length; i++) {
+            var currPlayer = $scope.players[i];
+            var isWinner = false;
+
+            for (var j = 0; j < $scope.winningPlayers.length; j++) {
+                var currWinner = $scope.winningPlayers[j];
+                if (currWinner == currPlayer) {
+                    currPlayer.wins += 1;
+                    isWinner = true;
+                }
+            }//End winners for
+            if (!isWinner) {
+                currPlayer.losses += 1;
+            }
+        }//End players for
     }
 
     /**
@@ -382,8 +403,8 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         if(done) {
             $scope.gaming = false;
             $scope.players.splice(0, $scope.players.length);
-            $scope.players.push({ name: "Player", cards: [], turn: false, type: "Human" });
-            $scope.players.push({ name: "Dealer", cards: [], turn: false, type: "CPU" });
+            $scope.players.push({ name: "Player", cards: [], turn: false, type: "Human", wins: 0, losses: 0  });
+            $scope.players.push({ name: "Dealer", cards: [], turn: false, type: "CPU", wins: 0, losses: 0  });
         } else {
             $scope.dealOutCards();
         }
