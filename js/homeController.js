@@ -43,6 +43,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
 
     //Black Jack vars
     $scope.gaming = false;              //Flag for gaming
+    $scope.viewingSettings = false;     //Flag for the settings
     $scope.playerTurnIndex = 0;         //Flag for the current hand
     $scope.trash = [];                  //discard pile
     $scope.deck = getCards();           //Deck of Cards
@@ -53,7 +54,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
     $scope.settings = {
-        cpuDecisionTime: 3000,
+        cpuDecisionTime: 2000,
         showRecords: true,
         showPercentage: true
     }
@@ -144,39 +145,39 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         if (total === 21) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         }
     }
 
@@ -254,6 +255,10 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
                 $scope.players.splice(index, 1);
             }
         }
+    }
+
+    $scope.showSettings = function() {
+        $scope.viewingSettings = !$scope.viewingSettings;
     }
 
     /**
@@ -452,6 +457,13 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         return total;
     }
 
+    /**
+     * Shows the percent of of cards left in the deck that won't set the user
+     * over 21.
+     * 
+     * @param  {} player - The player to get the percent calculated
+     * @returns string - The percentage of cards that won't set the user over 21
+     */
     $scope.calcPercent = function(player) {
         var playersTotal = $scope.cardsTotal(player);
         var remainingNumber = 21-playersTotal;
