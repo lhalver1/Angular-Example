@@ -52,10 +52,6 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     ];
     $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
-    $scope.settings = {
-        cpuDecisionTime: 3000,
-        showRecords: true
-    };
     
     /**
      * Builds the deck of cards. Creates an array of card objects with a
@@ -416,7 +412,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     }
 
     /**
-     * Counts the cards total.
+     * Counts the cards sum.
      * 
      * @param  {object} player - The player whose cards need to be added up
      * @returns {int} total - The sum of the players cards
@@ -448,6 +444,32 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         }
 
         return total;
+    }
+
+    $scope.calcPercent = function(player) {
+        var playersTotal = $scope.cardsTotal(player);
+        var remainingNumber = 21-playersTotal;
+        var goodCardsLeft = 0;
+
+        // Loop through trash looking for discarded cards that the player needs
+        for (var index = 0; index < $scope.deck.length; index++) {
+            var currCard = $scope.deck[index];
+
+            if (currCard.value === "Ace") {
+                if ( 11 <= remainingNumber || (10 >= remainingNumber && remainingNumber >= 1)) {
+                    goodCardsLeft += 1;
+                }
+            } else if (currCard.value === "Jack" || currCard.value === "Queen" || currCard.value === "King") {
+                if ( 10 <= remainingNumber ) {
+                    goodCardsLeft += 1;
+                }
+            } 
+            else if (parseInt(currCard.value) <= remainingNumber) {
+                goodCardsLeft += 1;
+            }
+        }
+
+        return ((goodCardsLeft / $scope.deck.length) * 100).toFixed(1) + "%";
     }
 
     /**

@@ -76,7 +76,10 @@
                 </div>
                 <div class="row" ng-if="playerTurnIndex === $index && player.type === 'Human'">
                     <div class="col-md-6 col-sm-2 col-xs-2">
-                        <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit(player)" ng-show="gaming">Hit</button>
+                        <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit(player)" ng-show="gaming">
+                            Hit<br>
+                            {{ calcPercent(player) }}
+                        </button>
                     </div>
                     <div class="col-md-6 col-sm-2 col-xs-2">
                         <button class="btn" ng-class="{ 'btn-warning-outline': themeName === 'bs4', 'btn-warning': themeName === 'bs3' }" ng-click="stay(player)" ng-show="gaming">Stay</button>
