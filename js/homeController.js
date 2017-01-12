@@ -43,6 +43,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
 
     //Black Jack vars
     $scope.gaming = false;              //Flag for gaming
+    $scope.viewingSettings = false;     //Flag for the settings
     $scope.playerTurnIndex = 0;         //Flag for the current hand
     $scope.trash = [];                  //discard pile
     $scope.deck = getCards();           //Deck of Cards
@@ -53,9 +54,11 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
     $scope.settings = {
-        cpuDecisionTime: 3000,
-        showRecords: true
-    };
+        cpuDecisionTime: 2000,
+        showRecords: true,
+        showPercentage: true
+    }
+
     
     /**
      * Builds the deck of cards. Creates an array of card objects with a
@@ -142,39 +145,39 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         if (total === 21) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe > 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total <= 16 && numPlayersBehindMe === 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe > 0 && highestVisibleTotal > total) {
             $timeout(function() {
                 $scope.hit(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         } else if(total > 16 && numPlayersBehindMe === 0 && highestVisibleTotal <= total) {
             $timeout(function() {
                 $scope.stay(player);
-            }, 2000);
+            }, $scope.settings.cpuDecisionTime);
         }
     }
 
@@ -252,6 +255,10 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
                 $scope.players.splice(index, 1);
             }
         }
+    }
+
+    $scope.showSettings = function() {
+        $scope.viewingSettings = !$scope.viewingSettings;
     }
 
     /**
@@ -415,7 +422,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     }
 
     /**
-     * Counts the cards total.
+     * Counts the cards sum.
      * 
      * @param  {object} player - The player whose cards need to be added up
      * @returns {int} total - The sum of the players cards
@@ -447,6 +454,39 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
         }
 
         return total;
+    }
+
+    /**
+     * Shows the percent of of cards left in the deck that won't set the user
+     * over 21.
+     * 
+     * @param  {} player - The player to get the percent calculated
+     * @returns string - The percentage of cards that won't set the user over 21
+     */
+    $scope.calcPercent = function(player) {
+        var playersTotal = $scope.cardsTotal(player);
+        var remainingNumber = 21-playersTotal;
+        var goodCardsLeft = 0;
+
+        // Loop through trash looking for discarded cards that the player needs
+        for (var index = 0; index < $scope.deck.length; index++) {
+            var currCard = $scope.deck[index];
+
+            if (currCard.value === "Ace") {
+                if ( 11 <= remainingNumber || (10 >= remainingNumber && remainingNumber >= 1)) {
+                    goodCardsLeft += 1;
+                }
+            } else if (currCard.value === "Jack" || currCard.value === "Queen" || currCard.value === "King") {
+                if ( 10 <= remainingNumber ) {
+                    goodCardsLeft += 1;
+                }
+            } 
+            else if (parseInt(currCard.value) <= remainingNumber) {
+                goodCardsLeft += 1;
+            }
+        }
+
+        return ((goodCardsLeft / $scope.deck.length) * 100).toFixed(1) + "%";
     }
 
     /**

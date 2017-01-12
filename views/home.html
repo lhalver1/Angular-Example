@@ -8,6 +8,10 @@
             <button class="btn" ng-click="dealOutCards()" ng-class="{ 'btn-primary-outline': themeName === 'bs4', 'btn-primary': themeName === 'bs3' }" ng-if="trash.length < 38">Deal</button>
             <button class="btn" ng-click="reshuffle(false)" ng-class="{ 'btn-info-outline': themeName === 'bs4', 'btn-info': themeName === 'bs3' }" ng-show="gaming">Shuffle</button>
             <button class="btn" ng-click="addNewPlayer()" ng-disabled="players.length > 5" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-show="gaming">Add Player</button>
+            <button class="btn" ng-click="showSettings()" ng-class="{ 'btn-warning-outline': !viewingSettings, 'btn-danger-outline': viewingSettings }" ng-show="gaming">
+                <span ng-if="!viewingSettings">Settings</span>
+                <span ng-if="viewingSettings">Hide Settings</span>
+            </button>
         </div>
         <div class="col-xs-2 col-sm-3">
             <button class="btn" style="float:right;" ng-click="reshuffle(true)" ng-class="{ 'btn-danger-outline': themeName === 'bs4', 'btn-danger': themeName === 'bs3' }" ng-show="gaming">Close</button>
@@ -15,6 +19,57 @@
     </div>
 
     <div ng-show="gaming">
+
+        <div class="row" ng-if="viewingSettings" style="background-color: #eee;">
+
+            <div class="row">
+                <div class="col-xs-2">
+                    Show Percentage
+                </div>
+                <div class="col-xs-8">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="showPercent" id="showPercentTrue" data-ng-model="settings.showPercentage" data-ng-value="true">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="showPercent" id="showPercentFalse" data-ng-model="settings.showPercentage" data-ng-value="false">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    Show Records
+                </div>
+                <div class="col-xs-8">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="showRecords" id="showRecordsTrue" data-ng-model="settings.showRecords" data-ng-value="true">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="showRecords" id="showRecordsFalse" data-ng-model="settings.showRecords" data-ng-value="false">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    CPU Decision Time
+                </div>
+                <div class="col-xs-8">
+                    <input class="form-check-input" type="text" ng-value="settings.cpuDecisionTime">
+                </div>
+            </div>
+            
+        </div>
 
         <div class="row" ng-if="winningPlayers.length > 0">
             <div class="col-md-12" style="text-align:center;">
@@ -30,7 +85,7 @@
                 <div class="row">
                     <div ng-if="player.name != 'Dealer'">
                         <div class="col-md-12 playerName" ng-click="selectPlayer(player)" ng-if="selectedPlayer != player">
-                            {{player.name}}: {{player.wins}}-{{player.losses}}
+                            {{player.name}}<span ng-if="settings.showRecords">: {{player.wins}}-{{player.losses}}</span>
                         </div>
                         <form ng-submit="selectPlayer(player)">
                             <input class="form-control" type="text"
@@ -40,7 +95,7 @@
                         </form>
                     </div>
                     <div ng-if="player.name === 'Dealer'">
-                        <div class="col-md-12">{{player.name}}: {{player.wins}}-{{player.losses}}</div>
+                        <div class="col-md-12">{{player.name}}<span ng-if="settings.showRecords">: {{player.wins}}-{{player.losses}}</span></div>
                     </div>
                 </div>
                 <div class="row">
@@ -76,7 +131,10 @@
                 </div>
                 <div class="row" ng-if="playerTurnIndex === $index && player.type === 'Human'">
                     <div class="col-md-6 col-sm-2 col-xs-2">
-                        <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit(player)" ng-show="gaming">Hit</button>
+                        <button class="btn" ng-class="{ 'btn-success-outline': themeName === 'bs4', 'btn-success': themeName === 'bs3' }" ng-click="hit(player)" ng-show="gaming">
+                            Hit<span ng-if="settings.showPercentage"><br>
+                            {{ calcPercent(player) }}</span>
+                        </button>
                     </div>
                     <div class="col-md-6 col-sm-2 col-xs-2">
                         <button class="btn" ng-class="{ 'btn-warning-outline': themeName === 'bs4', 'btn-warning': themeName === 'bs3' }" ng-click="stay(player)" ng-show="gaming">Stay</button>
