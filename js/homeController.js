@@ -317,7 +317,6 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
             $scope.goBeABot(player);
         }
 
-
     }
 
     /**
