@@ -52,6 +52,12 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     ];
     $scope.winningPlayers = [];
     $scope.selectedPlayer = null;
+    $scope.settings = {
+        cpuDecisionTime: 3000,
+        showRecords: true,
+        showPercentage: true
+    }
+
     
     /**
      * Builds the deck of cards. Creates an array of card objects with a
