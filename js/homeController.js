@@ -422,7 +422,7 @@ myApp.controller('MyCtrl', function MyCtrl($scope, $timeout, mainService) {
     }
 
     /**
-     * Counts the cards sum.
+     * Counts the cards sum in a players hand.
      * 
      * @param  {object} player - The player whose cards need to be added up
      * @returns {int} total - The sum of the players cards
